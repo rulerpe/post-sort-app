@@ -129,22 +129,24 @@ class SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Summary')),
-      body: _shortSummary == null || _longSummary == null
-          ? CircularProgressIndicator() // Show loading indicator until summaries are fetched
-          : Column(
-              children: [
-                Text('这是一封 $_shortSummary'),
-                SizedBox(height: 10),
-                Text('内容概要: $_longSummary'),
-                // Add a button to take another picture
-                ElevatedButton(
-                  onPressed: () =>
-                      Navigator.pushReplacementNamed(context, '/camera'),
-                  child: Text('Take Another Picture'),
+        appBar: AppBar(title: Text('Summary')),
+        body: Center(
+          child: _shortSummary == null || _longSummary == null
+              ? CircularProgressIndicator() // Show loading indicator until summaries are fetched
+              : Column(
+                  children: [
+                    Text('这是一封 $_shortSummary', style: TextStyle(fontSize: 24)),
+                    SizedBox(height: 10),
+                    Text('内容概要: $_longSummary', style: TextStyle(fontSize: 24)),
+                    // Add a button to take another picture
+                    ElevatedButton(
+                      onPressed: () =>
+                          Navigator.pushReplacementNamed(context, '/'),
+                      child: Text('Take Another Picture',
+                          style: TextStyle(fontSize: 24)),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-    );
+        ));
   }
 }

@@ -29,11 +29,11 @@ class HomePage extends StatelessWidget {
                     );
                   }
                 },
-                child: Text("Capture Image"),
+                child: Text("Take a picture", style: TextStyle(fontSize: 24)),
               ),
-              ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/login'),
-                  child: Text('Login/SignUp'))
+              // ElevatedButton(
+              //     onPressed: () => Navigator.pushNamed(context, '/login'),
+              //     child: Text('Login/SignUp'))
             ],
           ),
         ));
