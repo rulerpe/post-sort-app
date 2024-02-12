@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-postsortclient-dev-165044-authRole",
+      "UnauthRoleArn": "arn:aws:iam::905418120652:role/amplify-postsortclient-dev-165044-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::905418120652:role/amplify-postsortclient-dev-165044-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-postsortclient-dev-165044-deployment",
+      "UnauthRoleName": "amplify-postsortclient-dev-165044-unauthRole",
+      "StackName": "amplify-postsortclient-dev-165044",
+      "StackId": "arn:aws:cloudformation:us-west-1:905418120652:stack/amplify-postsortclient-dev-165044/6d0ab800-c7ae-11ee-a159-022c4f015b2d",
+      "AmplifyAppId": "d3bq8su9t0si31"
+    },
+    "categories": {
+      "api": {
+        "postsortclient": {}
+      }
+    }
+  }
+}

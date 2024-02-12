@@ -1,0 +1,32 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type DocumentSummary {
+	documentId: ID!
+	originalText: String!
+	shortSummary: String
+	longSummary: String
+	shortSummaryZh: String
+	longSummaryZh: String
+}
+
+type Mutation {
+	publish(
+		documentId: ID!,
+		originalText: String!,
+		shortSummary: String,
+		longSummary: String,
+		shortSummaryZh: String,
+		longSummaryZh: String
+	): DocumentSummary
+}
+
+type Query {
+	getDocumentSummary(documentId: ID!): DocumentSummary
+}
+
+type Subscription {
+	subscribe(documentId: ID!): DocumentSummary
+		@aws_subscribe(mutations: ["publish"])
+}
