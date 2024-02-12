@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                     );
                   }
                 },
-                child: Text("Take a picture", style: TextStyle(fontSize: 24)),
+                child: Text("拍摄信件", style: TextStyle(fontSize: 24)),
               ),
               // ElevatedButton(
               //     onPressed: () => Navigator.pushNamed(context, '/login'),
@@ -49,7 +49,10 @@ class HomePage extends StatelessWidget {
     } else {
       // Mobile
       final ImagePicker picker = ImagePicker();
-      XFile? file = await picker.pickImage(source: ImageSource.camera);
+      XFile? file = await picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 50,
+      );
       return await file?.readAsBytes();
     }
   }
