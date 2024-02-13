@@ -104,7 +104,7 @@ class CameraPageState extends State<CameraPage> {
                 if (image != null) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => SummaryPage(image: image),
+                      builder: (context) => SummaryPage(),
                     ),
                   );
                 }

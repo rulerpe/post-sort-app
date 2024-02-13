@@ -1,12 +1,19 @@
 import 'package:english_words/english_words.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:postsort_client/pages/camera_page.dart';
 import 'package:postsort_client/pages/home_page.dart';
 import 'package:postsort_client/pages/login_signup_page.dart';
+import 'package:postsort_client/pages/summary_page.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'amplifyconfiguration.dart';
+import './url_strategy/url_strategy.dart';
+import 'package:provider/provider.dart';
+import './summary_page_arg_providar.dart';
+
+// import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 // import 'package:camera/camera.dart';
 
 // import 'dart:async';
@@ -227,7 +234,11 @@ import 'amplifyconfiguration.dart';
 // }
 
 void main() {
-  runApp(MyApp());
+  setCustomUrlStrategy();
+  runApp(ChangeNotifierProvider(
+      // create global state
+      create: (context) => SummaryPageArgumentsProvider(),
+      child: MyApp()));
   _configureAmplify();
 }
 
@@ -245,10 +256,27 @@ void _configureAmplify() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: "Mail Processor App", initialRoute: "/", routes: {
-      "/": (context) => HomePage(),
-      "/camera": (context) => CameraPage(),
-      "/login": (context) => LoginSignUpPage(),
-    });
+    return MaterialApp(
+      title: "Mail Processor App",
+      initialRoute: "/",
+      routes: {
+        "/": (context) => HomePage(),
+        "/camera": (context) => CameraPage(),
+        "/login": (context) => LoginSignUpPage(),
+        "/summary": (context) => SummaryPage()
+      },
+      // onGenerateRoute: (RouteSettings settings) {
+      //   if (settings.name == '/summary') {
+      //     final args = settings.arguments as SummaryPageArguments;
+      //     return MaterialPageRoute(
+      //       builder: (context) {
+      //         return SummaryPage(image: args.image);
+      //       },
+      //     );
+      //   }
+      //   // Define other routes handling here
+      //   // Return null or a default route for unknown routes
+      // },
+    );
   }
 }

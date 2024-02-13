@@ -6,11 +6,17 @@ import 'dart:async'; // For StreamSubscription
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
+import 'package:provider/provider.dart';
+import '../summary_page_arg_providar.dart';
 
-class SummaryPage extends StatefulWidget {
+class SummaryPageArguments {
   final Uint8List image;
 
-  SummaryPage({required this.image});
+  SummaryPageArguments(this.image);
+}
+
+class SummaryPage extends StatefulWidget {
+  SummaryPage();
 
   @override
   SummaryPageState createState() => SummaryPageState();
@@ -22,11 +28,20 @@ class SummaryPageState extends State<SummaryPage> {
   String? _shortSummary;
   String? _longSummary;
   String? _documentId;
+  bool _isImageProcessed = false;
 
   @override
-  void initState() {
-    super.initState();
-    _uploadImageAndGetSummaries(widget.image);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isImageProcessed) {
+      final argsProvider = Provider.of<SummaryPageArgumentsProvider>(context);
+      final Uint8List? image = argsProvider.args?.image;
+      if (image != null) {
+        _uploadImageAndGetSummaries(image);
+        _isImageProcessed = true;
+      }
+    }
+    ;
   }
 
   @override
