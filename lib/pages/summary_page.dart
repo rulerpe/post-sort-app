@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:provider/provider.dart';
 import '../summary_page_arg_providar.dart';
+import "package:shared_preferences/shared_preferences.dart";
+import 'package:uuid/uuid.dart';
 
 class SummaryPageArguments {
   final Uint8List image;
@@ -97,11 +99,26 @@ class SummaryPageState extends State<SummaryPage> {
     return documentId;
   }
 
+  // create unqiu id for each device, to track usage, before user authancation in implmented
+  Future<String> getOrCreateUniqueId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uniqueId = prefs.getString('unique_id');
+    if (uniqueId == null) {
+      uniqueId = Uuid().v4(); // Generates a new UUID
+      await prefs.setString('unique_id', uniqueId);
+    }
+    return uniqueId;
+  }
+
   Future<void> _uploadImageAndGetSummaries(Uint8List image) async {
     try {
       // get presigned url
-      final response = await http.get(Uri.parse(
-          'https://0cex1llwp9.execute-api.us-west-1.amazonaws.com/presigned_s3_mailphoto_url'));
+      var uniqueId = await getOrCreateUniqueId();
+      var url = Uri.parse(
+              'https://0cex1llwp9.execute-api.us-west-1.amazonaws.com/presigned_s3_mailphoto_url')
+          .replace(queryParameters: {'uniqueId': uniqueId});
+      final response = await http.get(url);
+      print('response from geting url: $response');
       if (response.statusCode != 200) {
         print('Failed to fetch presigned URL: ${response.body}');
         return; // Early return on failure
