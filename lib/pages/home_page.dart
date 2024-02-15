@@ -41,9 +41,9 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text("拍摄信件", style: TextStyle(fontSize: 24)),
               ),
-              // ElevatedButton(
-              //     onPressed: () => Navigator.pushNamed(context, '/login'),
-              //     child: Text('Login/SignUp'))
+              ElevatedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/login'),
+                  child: Text('Login/SignUp'))
             ],
           ),
         ));
