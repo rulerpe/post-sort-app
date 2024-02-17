@@ -1,4 +1,4 @@
-name: postsort_client
+name: DuXin
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -46,6 +46,8 @@ dependencies:
   amplify_api: ^1.6.2
   image_picker: ^1.0.7
   shared_preferences: ^2.2.2
+  firebase_core: ^2.24.2
+  firebase_analytics: ^10.8.0
 
 dev_dependencies:
   flutter_test:

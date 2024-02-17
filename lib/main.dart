@@ -1,17 +1,20 @@
 import 'package:english_words/english_words.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:postsort_client/pages/camera_page.dart';
-import 'package:postsort_client/pages/home_page.dart';
-import 'package:postsort_client/pages/login_signup_page.dart';
-import 'package:postsort_client/pages/summary_page.dart';
+import 'package:DuXin/pages/camera_page.dart';
+import 'package:DuXin/pages/home_page.dart';
+import 'package:DuXin/pages/login_signup_page.dart';
+import 'package:DuXin/pages/summary_page.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'amplifyconfiguration.dart';
 import './url_strategy/url_strategy.dart';
 import 'package:provider/provider.dart';
 import './summary_page_arg_providar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 // import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 // import 'package:camera/camera.dart';
@@ -233,8 +236,18 @@ import './summary_page_arg_providar.dart';
 //   }
 // }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setCustomUrlStrategy();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyAtORH9WegXFON540Fns7h7Z7bEVkhqEm0",
+          authDomain: "duxin-617c5.firebaseapp.com",
+          projectId: "duxin-617c5",
+          storageBucket: "duxin-617c5.appspot.com",
+          messagingSenderId: "757621203313",
+          appId: "1:757621203313:web:9f8b73b412bd85829d96d0",
+          measurementId: "G-7MF6TYZP9Z"));
   runApp(ChangeNotifierProvider(
       // create global state
       create: (context) => SummaryPageArgumentsProvider(),
@@ -254,29 +267,47 @@ void _configureAmplify() async {
 }
 
 class MyApp extends StatelessWidget {
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Mail Processor App",
+      title: "DuXin",
+      theme: ThemeData(
+        colorScheme: ColorScheme.light(
+          primary: Colors.white, // used by AppBar
+          secondary:
+              Colors.white, // used by FloatingActionButtons and ButtonText
+        ),
+        fontFamily: 'Roboto',
+
+        // Define the default `ElevatedButton` theme.
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0))),
+        ),
+        // AppBar theme
+        appBarTheme: AppBarTheme(
+          color: Colors.blue,
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+          iconTheme: IconThemeData(
+            color: Colors.white, // Here's the navigation arrow color
+          ),
+        ),
+
+        // CircularProgressIndicator theme
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: Colors.blue, // CircularProgressIndicator color
+        ),
+      ),
       initialRoute: "/",
       routes: {
-        "/": (context) => HomePage(),
+        "/": (context) => HomePage(analytics: analytics),
         "/camera": (context) => CameraPage(),
         "/login": (context) => LoginSignUpPage(),
         "/summary": (context) => SummaryPage()
       },
-      // onGenerateRoute: (RouteSettings settings) {
-      //   if (settings.name == '/summary') {
-      //     final args = settings.arguments as SummaryPageArguments;
-      //     return MaterialPageRoute(
-      //       builder: (context) {
-      //         return SummaryPage(image: args.image);
-      //       },
-      //     );
-      //   }
-      //   // Define other routes handling here
-      //   // Return null or a default route for unknown routes
-      // },
     );
   }
 }

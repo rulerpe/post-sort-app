@@ -1,4 +1,4 @@
-import 'package:postsort_client/pages/summary_page.dart';
+import 'package:DuXin/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 
 class SummaryPageArgumentsProvider with ChangeNotifier {

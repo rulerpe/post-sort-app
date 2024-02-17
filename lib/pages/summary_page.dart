@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../summary_page_arg_providar.dart';
 import "package:shared_preferences/shared_preferences.dart";
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart';
 
 class SummaryPageArguments {
   final Uint8List image;
@@ -161,7 +162,7 @@ class SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Summary')),
+      appBar: AppBar(title: Text('读信')),
       body: Center(
           child: _shortSummary == null || _longSummary == null
               ? Column(
@@ -169,7 +170,7 @@ class SummaryPageState extends State<SummaryPage> {
                   children: [
                     CircularProgressIndicator(),
                     SizedBox(height: 10),
-                    Text('正在分析...', style: TextStyle(fontSize: 24))
+                    Text('正在读信...', style: TextStyle(fontSize: 24))
                   ],
                 ) // Show loading indicator until summaries are fetched
               : SingleChildScrollView(
