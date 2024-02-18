@@ -28,8 +28,9 @@ class SummaryPage extends StatefulWidget {
 class SummaryPageState extends State<SummaryPage> {
   StreamSubscription? _subscription;
 
-  String? _shortSummary;
-  String? _longSummary;
+  String? _title;
+  String? _summary;
+  String? _action;
   String? _documentId;
   bool _isImageProcessed = false;
 
@@ -60,10 +61,12 @@ class SummaryPageState extends State<SummaryPage> {
         getNewDocument(documentId: \$documentId) {
           documentId
           originalText
-          shortSummary
-          longSummary
-          shortSummaryZh
-          longSummaryZh
+          title
+          summary
+          action
+          titleTranslated
+          summaryTranslated
+          actionTranslated
         }
       }
     ''';
@@ -78,11 +81,12 @@ class SummaryPageState extends State<SummaryPage> {
     _subscription = Amplify.API.subscribe(request).listen(
       (event) {
         if (event.data != null) {
-          print('Received shortSummaryZh: ${event.data}');
+          print('Received event.data: ${event.data}');
           final jsonData = json.decode(event.data);
           setState(() {
-            _shortSummary = jsonData["getNewDocument"]["shortSummaryZh"];
-            _longSummary = jsonData["getNewDocument"]["longSummaryZh"];
+            _title = jsonData["getNewDocument"]["titleTranslated"];
+            _summary = jsonData["getNewDocument"]["summaryTranslated"];
+            _action = jsonData["getNewDocument"]["actionTranslated"];
           });
           _subscription?.cancel();
         } else {
@@ -164,7 +168,7 @@ class SummaryPageState extends State<SummaryPage> {
     return Scaffold(
       appBar: AppBar(title: Text('读信')),
       body: Center(
-          child: _shortSummary == null || _longSummary == null
+          child: _title == null || _summary == null
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -179,17 +183,16 @@ class SummaryPageState extends State<SummaryPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('这是一封$_shortSummary',
-                            style: TextStyle(fontSize: 24)),
+                        Text('标题: $_title', style: TextStyle(fontSize: 24)),
                         SizedBox(height: 10),
-                        Text('内容概要: $_longSummary',
-                            style: TextStyle(fontSize: 24)),
-                        // Add a button to take another picture
+                        Text('内容概要: $_summary', style: TextStyle(fontSize: 24)),
+                        SizedBox(height: 10),
+                        Text('$_action', style: TextStyle(fontSize: 24)),
                       ],
                     ),
                   ),
                 )),
-      bottomNavigationBar: _shortSummary != null && _longSummary != null
+      bottomNavigationBar: _title != null && _summary != null
           ? Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(

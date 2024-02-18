@@ -34,7 +34,7 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "3841856431";
+    const serviceWorkerVersion = "1174496619";
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -108,9 +108,12 @@
 
           // Call the Dart callback with the compressed image
           window[callbackName](dataUrl);
+          input.remove();
         };
         img.src = URL.createObjectURL(file);
       };
+      document.body.appendChild(input); // Append to DOM
+      input.style.opacity = '0.1';
       input.click();
     }
   </script>

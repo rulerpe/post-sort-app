@@ -34,11 +34,6 @@ class HomePage extends StatelessWidget {
                       listen: false);
                   final Uint8List image = await pickImage(context);
                   if (image != null) {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SummaryPage(image: image),
-                    //   ),
-                    // );
                     provider.setArgs(SummaryPageArguments(image));
                     Navigator.pushNamed(
                       context,
